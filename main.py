@@ -168,7 +168,7 @@ def provide_recommendation(self, person1, person2, overall_score, detailed_score
         """Display statistics about the friendship network"""
         pass
 
-   def demo():
+def demo():
     """Demonstration of the AI Friendship Analyzer"""
     print("🤖 Welcome to AI-Powered Friendship Compatibility Analyzer!")
     print("=" * 60)

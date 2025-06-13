@@ -31,6 +31,32 @@ class Person:
 
 class FriendshipAnalyzer:
     """AI system to analyze friendship compatibility"""
+        def calculate_interest_compatibility(self, person1, person2):
+        """Calculate compatibility based on shared interests"""
+        shared_interests = set(person1.interests) & set(person2.interests)
+        total_interests = set(person1.interests) | set(person2.interests)
+
+        if len(total_interests) == 0:
+            return 0
+
+        similarity = len(shared_interests) / len(total_interests)
+        return similarity * 10  # Scale to 0-10
+
+    def calculate_age_compatibility(self, person1, person2):
+        """Calculate compatibility based on age difference"""
+        age_diff = abs(person1.age - person2.age)
+
+        if age_diff <= 2:
+            return 10
+        elif age_diff <= 5:
+            return 8
+        elif age_diff <= 10:
+            return 6
+        elif age_diff <= 15:
+            return 4
+        else:
+            return 2
+
 
     def __init__(self):
         self.people = []

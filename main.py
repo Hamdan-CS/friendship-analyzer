@@ -4,9 +4,10 @@
 This project analyzes friendship compatibility using Python and OOP.
 We'll gradually build it up step-by-step.
 """
+
 class Person:
     """Represents a person with their characteristics and preferences"""
-    
+
     def __init__(self, name, age, interests, personality_traits, communication_style):
         self.name = name
         self.age = age
@@ -30,104 +31,116 @@ class Person:
         print(f"{'='*50}")
 
 
+class FriendshipAnalyzer:
+    """AI system to analyze friendship compatibility"""
 
     def __init__(self):
         self.people = []
         self.compatibility_threshold = 7.0  # Minimum score for good compatibility
 
     def add_person(self, person):
-        """Add a person to the system"""
-        pass
+        self.people.append(person)
 
     def calculate_interest_compatibility(self, person1, person2):
-        """Calculate compatibility based on shared interests"""
-        pass
+        shared_interests = set(person1.interests) & set(person2.interests)
+        total_interests = set(person1.interests) | set(person2.interests)
+        if not total_interests:
+            return 0
+        return (len(shared_interests) / len(total_interests)) * 10
 
     def calculate_personality_compatibility(self, person1, person2):
-        """Calculate compatibility based on personality traits"""
-        pass
+        score = 0
+        traits = person1.personality_traits.keys()
+        for trait in traits:
+            score += 10 - abs(person1.personality_traits[trait] - person2.personality_traits[trait])
+        return score / len(traits)
 
     def calculate_communication_compatibility(self, person1, person2):
-        """Calculate compatibility based on communication styles"""
-        pass
+        score = 0
+        styles = person1.communication_style.keys()
+        for style in styles:
+            score += 10 - abs(person1.communication_style[style] - person2.communication_style[style])
+        return score / len(styles)
 
     def calculate_age_compatibility(self, person1, person2):
-        """Calculate compatibility based on age difference"""
-        pass
+        age_diff = abs(person1.age - person2.age)
+        if age_diff <= 2:
+            return 10
+        elif age_diff <= 5:
+            return 8
+        elif age_diff <= 10:
+            return 6
+        elif age_diff <= 15:
+            return 4
+        else:
+            return 2
 
-def analyze_compatibility(self, person1, person2):
-    """Main AI function to analyze overall compatibility"""
-    print(f"\n🤖 Analyzing compatibility between {person1.name} and {person2.name}...")
+    def analyze_compatibility(self, person1, person2):
+        print(f"\n🤖 Analyzing compatibility between {person1.name} and {person2.name}...")
 
-    interest_score = self.calculate_interest_compatibility(person1, person2)
-    personality_score = self.calculate_personality_compatibility(person1, person2)
-    communication_score = self.calculate_communication_compatibility(person1, person2)
-    age_score = self.calculate_age_compatibility(person1, person2)
+        interest_score = self.calculate_interest_compatibility(person1, person2)
+        personality_score = self.calculate_personality_compatibility(person1, person2)
+        communication_score = self.calculate_communication_compatibility(person1, person2)
+        age_score = self.calculate_age_compatibility(person1, person2)
 
-    weights = {
-        'interests': 0.3,
-        'personality': 0.4,
-        'communication': 0.2,
-        'age': 0.1
-    }
+        weights = {
+            'interests': 0.3,
+            'personality': 0.4,
+            'communication': 0.2,
+            'age': 0.1
+        }
 
-    overall_score = (
-        interest_score * weights['interests'] +
-        personality_score * weights['personality'] +
-        communication_score * weights['communication'] +
-        age_score * weights['age']
-    )
+        overall_score = (
+            interest_score * weights['interests'] +
+            personality_score * weights['personality'] +
+            communication_score * weights['communication'] +
+            age_score * weights['age']
+        )
 
-    print(f"\n📊 Compatibility Analysis Results:")
-    print(f"{'─'*40}")
-    print(f"Interest Compatibility: {interest_score:.1f}/10")
-    print(f"Personality Compatibility: {personality_score:.1f}/10")
-    print(f"Communication Compatibility: {communication_score:.1f}/10")
-    print(f"Age Compatibility: {age_score:.1f}/10")
-    print(f"{'─'*40}")
-    print(f"Overall Compatibility: {overall_score:.1f}/10")
+        print(f"\n📊 Compatibility Analysis Results:")
+        print(f"{'─'*40}")
+        print(f"Interest Compatibility: {interest_score:.1f}/10")
+        print(f"Personality Compatibility: {personality_score:.1f}/10")
+        print(f"Communication Compatibility: {communication_score:.1f}/10")
+        print(f"Age Compatibility: {age_score:.1f}/10")
+        print(f"{'─'*40}")
+        print(f"Overall Compatibility: {overall_score:.1f}/10")
 
-    self.provide_recommendation(person1, person2, overall_score, {
-        'interests': interest_score,
-        'personality': personality_score,
-        'communication': communication_score,
-        'age': age_score
-    })
+        self.provide_recommendation(person1, person2, overall_score, {
+            'interests': interest_score,
+            'personality': personality_score,
+            'communication': communication_score,
+            'age': age_score
+        })
 
-    return overall_score
+        return overall_score
 
+    def provide_recommendation(self, person1, person2, overall_score, detailed_scores):
+        print(f"\n🎯 AI Recommendation:")
+        if overall_score >= 8.5:
+            print("🌟 EXCELLENT MATCH! This friendship has amazing potential!")
+        elif overall_score >= 7.0:
+            print("✨ GREAT MATCH! This friendship looks very promising!")
+        elif overall_score >= 5.5:
+            print("👍 GOOD POTENTIAL! This friendship could work well with some effort.")
+        elif overall_score >= 4.0:
+            print("⚠️  MODERATE COMPATIBILITY. Friendship possible but may require work.")
+        else:
+            print("❌ LOW COMPATIBILITY. This friendship might be challenging.")
 
-def provide_recommendation(self, person1, person2, overall_score, detailed_scores):
-    """AI-powered recommendation based on analysis"""
-    print(f"\n🎯 AI Recommendation:")
+        print(f"\n💡 Specific Insights:")
+        if detailed_scores['interests'] < 5:
+            print("• Try exploring new activities together to find common interests")
+        if detailed_scores['personality'] < 5:
+            print("• Your personality differences could complement each other")
+        if detailed_scores['communication'] < 5:
+            print("• Work on understanding each other's communication styles")
 
-    if overall_score >= 8.5:
-        print("🌟 EXCELLENT MATCH! This friendship has amazing potential!")
-    elif overall_score >= 7.0:
-        print("✨ GREAT MATCH! This friendship looks very promising!")
-    elif overall_score >= 5.5:
-        print("👍 GOOD POTENTIAL! This friendship could work well with some effort.")
-    elif overall_score >= 4.0:
-        print("⚠️  MODERATE COMPATIBILITY. Friendship possible but may require work.")
-    else:
-        print("❌ LOW COMPATIBILITY. This friendship might be challenging.")
-
-    print(f"\n💡 Specific Insights:")
-    if detailed_scores['interests'] < 5:
-        print("• Try exploring new activities together to find common interests")
-    if detailed_scores['personality'] < 5:
-        print("• Your personality differences could complement each other")
-    if detailed_scores['communication'] < 5:
-        print("• Work on understanding each other's communication styles")
-
-    strongest_aspect = max(detailed_scores, key=detailed_scores.get)
-    print(f"• Your strongest connection is in: {strongest_aspect}")
-
+        strongest_aspect = max(detailed_scores, key=detailed_scores.get)
+        print(f"• Your strongest connection is in: {strongest_aspect}")
 
     def find_best_matches(self, person):
-        """Find the best friendship matches for a person"""
         print(f"\n🔍 Finding best matches for {person.name}...")
-
         matches = []
         for other_person in self.people:
             if other_person != person:
@@ -144,9 +157,7 @@ def provide_recommendation(self, person1, person2, overall_score, detailed_score
         return matches
 
     def create_friendship_network(self):
-        """Create friendships between compatible people"""
         print(f"\n🌐 Creating Friendship Network...")
-
         for person in self.people:
             for other_person in self.people:
                 if person != other_person:
@@ -156,41 +167,18 @@ def provide_recommendation(self, person1, person2, overall_score, detailed_score
                             'friend': other_person,
                             'compatibility_score': score
                         })
-
-        self.display_network_stats()
-
-
-        def create_friendship_network(self):
-        """Create friendships between compatible people"""
-        print(f"\n🌐 Creating Friendship Network...")
-
-        for person in self.people:
-            for other_person in self.people:
-                if person != other_person:
-                    score = self.analyze_compatibility(person, other_person)
-                    if score >= self.compatibility_threshold:
-                        person.friendships.append({
-                            'friend': other_person,
-                            'compatibility_score': score
-                        })
-
         self.display_network_stats()
 
     def display_network_stats(self):
-        """Display statistics about the friendship network"""
         print(f"\n📈 Network Statistics:")
         print("=" * 30)
-
         total_friendships = sum(len(person.friendships) for person in self.people)
         avg_friendships = total_friendships / len(self.people) if self.people else 0
-
         print(f"Total People: {len(self.people)}")
         print(f"Total Friendships: {total_friendships}")
         print(f"Average Friendships per Person: {avg_friendships:.1f}")
 
-
 def demo():
-    """Demonstration of the AI Friendship Analyzer"""
     print("🤖 Welcome to AI-Powered Friendship Compatibility Analyzer!")
     print("=" * 60)
 
@@ -234,52 +222,15 @@ def demo():
         }
     )
 
-    carol = Person(
-        name="Carol",
-        age=20,
-        interests=["reading", "art", "photography", "movies"],
-        personality_traits={
-            "extroversion": 8,
-            "openness": 9,
-            "agreeableness": 8,
-            "conscientiousness": 7,
-            "neuroticism": 2
-        },
-        communication_style={
-            "direct": 5,
-            "emotional": 8,
-            "humor": 7,
-            "formal": 5
-        }
-    )
-
     analyzer.add_person(alice)
     analyzer.add_person(bob)
-    analyzer.add_person(carol)
 
     alice.display_info()
     bob.display_info()
-    carol.display_info()
 
     analyzer.analyze_compatibility(alice, bob)
-    analyzer.analyze_compatibility(alice, carol)
-    analyzer.analyze_compatibility(bob, carol)
-
     analyzer.find_best_matches(alice)
     analyzer.create_friendship_network()
 
 if __name__ == "__main__":
-    print("Choose mode:")
-    print("1. Demo mode (see how it works)")
-    print("2. Interactive mode (create your own analysis)")
-
-    mode = input("Enter choice (1 or 2): ")
-
-    if mode == "1":
-        demo()
-    elif mode == "2":
-        interactive_mode()
-    else:
-        print("Running demo mode by default...")
-        demo()
-
+    demo()

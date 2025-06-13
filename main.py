@@ -268,4 +268,18 @@ def demo():
     analyzer.find_best_matches(alice)
     analyzer.create_friendship_network()
 
+if __name__ == "__main__":
+    print("Choose mode:")
+    print("1. Demo mode (see how it works)")
+    print("2. Interactive mode (create your own analysis)")
+
+    mode = input("Enter choice (1 or 2): ")
+
+    if mode == "1":
+        demo()
+    elif mode == "2":
+        interactive_mode()
+    else:
+        print("Running demo mode by default...")
+        demo()
 

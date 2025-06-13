@@ -168,3 +168,83 @@ def provide_recommendation(self, person1, person2, overall_score, detailed_score
         """Display statistics about the friendship network"""
         pass
 
+   def demo():
+    """Demonstration of the AI Friendship Analyzer"""
+    print("🤖 Welcome to AI-Powered Friendship Compatibility Analyzer!")
+    print("=" * 60)
+
+    analyzer = FriendshipAnalyzer()
+
+    alice = Person(
+        name="Alice",
+        age=22,
+        interests=["reading", "hiking", "photography", "cooking"],
+        personality_traits={
+            "extroversion": 7,
+            "openness": 8,
+            "agreeableness": 9,
+            "conscientiousness": 8,
+            "neuroticism": 3
+        },
+        communication_style={
+            "direct": 6,
+            "emotional": 7,
+            "humor": 8,
+            "formal": 4
+        }
+    )
+
+    bob = Person(
+        name="Bob",
+        age=25,
+        interests=["hiking", "gaming", "music", "travel"],
+        personality_traits={
+            "extroversion": 6,
+            "openness": 9,
+            "agreeableness": 7,
+            "conscientiousness": 6,
+            "neuroticism": 4
+        },
+        communication_style={
+            "direct": 8,
+            "emotional": 5,
+            "humor": 9,
+            "formal": 3
+        }
+    )
+
+    carol = Person(
+        name="Carol",
+        age=20,
+        interests=["reading", "art", "photography", "movies"],
+        personality_traits={
+            "extroversion": 8,
+            "openness": 9,
+            "agreeableness": 8,
+            "conscientiousness": 7,
+            "neuroticism": 2
+        },
+        communication_style={
+            "direct": 5,
+            "emotional": 8,
+            "humor": 7,
+            "formal": 5
+        }
+    )
+
+    analyzer.add_person(alice)
+    analyzer.add_person(bob)
+    analyzer.add_person(carol)
+
+    alice.display_info()
+    bob.display_info()
+    carol.display_info()
+
+    analyzer.analyze_compatibility(alice, bob)
+    analyzer.analyze_compatibility(alice, carol)
+    analyzer.analyze_compatibility(bob, carol)
+
+    analyzer.find_best_matches(alice)
+    analyzer.create_friendship_network()
+
+

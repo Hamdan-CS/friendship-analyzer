@@ -160,13 +160,34 @@ def provide_recommendation(self, person1, person2, overall_score, detailed_score
         self.display_network_stats()
 
 
-    def create_friendship_network(self):
+        def create_friendship_network(self):
         """Create friendships between compatible people"""
-        pass
+        print(f"\n🌐 Creating Friendship Network...")
+
+        for person in self.people:
+            for other_person in self.people:
+                if person != other_person:
+                    score = self.analyze_compatibility(person, other_person)
+                    if score >= self.compatibility_threshold:
+                        person.friendships.append({
+                            'friend': other_person,
+                            'compatibility_score': score
+                        })
+
+        self.display_network_stats()
 
     def display_network_stats(self):
         """Display statistics about the friendship network"""
-        pass
+        print(f"\n📈 Network Statistics:")
+        print("=" * 30)
+
+        total_friendships = sum(len(person.friendships) for person in self.people)
+        avg_friendships = total_friendships / len(self.people) if self.people else 0
+
+        print(f"Total People: {len(self.people)}")
+        print(f"Total Friendships: {total_friendships}")
+        print(f"Average Friendships per Person: {avg_friendships:.1f}")
+
 
 def demo():
     """Demonstration of the AI Friendship Analyzer"""

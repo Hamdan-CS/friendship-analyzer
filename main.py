@@ -29,6 +29,32 @@ class Person:
         for style, score in self.communication_style.items():
             print(f"  - {style.title()}: {score}/10")
         print(f"{'='*50}")
+            def compatibility_strategy(self, other):
+        return 5  # neutral default
+
+
+class EmpatheticPerson(Person):
+    def compatibility_strategy(self, other):
+        return 10 if "emotional" in other.communication_style else 4
+
+class LogicalPerson(Person):
+    def compatibility_strategy(self, other):
+        return 10 if "direct" in other.communication_style else 3
+
+class CreativePerson(Person):
+    def compatibility_strategy(self, other):
+        return 10 if "humor" in other.communication_style or "openness" in other.personality_traits else 5
+
+class ReservedPerson(Person):
+    def compatibility_strategy(self, other):
+        return 9 if other.personality_traits.get("extroversion", 0) <= 4 else 4
+
+class EnergeticPerson(Person):
+    def compatibility_strategy(self, other):
+        return 10 if other.personality_traits.get("extroversion", 0) >= 7 else 5
+
+
+
 
 
 class FriendshipAnalyzer:

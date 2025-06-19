@@ -11,13 +11,12 @@ class Person:
     def __init__(self, name, age, interests, personality_traits, communication_style):
         self.name = name
         self.age = age
-        self.interests = interests  # List of interests
-        self.personality_traits = personality_traits  # Dictionary with scores 0-10
-        self.communication_style = communication_style  # Dictionary with preferences
+        self.interests = interests
+        self.personality_traits = personality_traits
+        self.communication_style = communication_style
         self.friendships = []
 
     def display_info(self):
-        """Display person's information in a formatted way"""
         print(f"\n{'='*50}")
         print(f"Name: {self.name}")
         print(f"Age: {self.age}")
@@ -29,9 +28,9 @@ class Person:
         for style, score in self.communication_style.items():
             print(f"  - {style.title()}: {score}/10")
         print(f"{'='*50}")
-            def compatibility_strategy(self, other):
-        return 5  # neutral default
 
+    def compatibility_strategy(self, other):
+        return 5
 
 class EmpatheticPerson(Person):
     def compatibility_strategy(self, other):
@@ -53,16 +52,27 @@ class EnergeticPerson(Person):
     def compatibility_strategy(self, other):
         return 10 if other.personality_traits.get("extroversion", 0) >= 7 else 5
 
+class AnalyticalPerson(Person):
+    def compatibility_strategy(self, other):
+        diff = abs(self.personality_traits.get("conscientiousness", 5) - other.personality_traits.get("conscientiousness", 5))
+        return 10 - diff
 
+class AdventurousPerson(Person):
+    def compatibility_strategy(self, other):
+        return 10 if other.personality_traits.get("openness", 0) >= 7 else 5
 
+class IntrovertPerson(Person):
+    def compatibility_strategy(self, other):
+        return 10 if other.personality_traits.get("extroversion", 0) <= 4 else 3
 
+class HumorousPerson(Person):
+    def compatibility_strategy(self, other):
+        return 10 if other.communication_style.get("humor", 0) >= 7 else 5
 
 class FriendshipAnalyzer:
-    """AI system to analyze friendship compatibility"""
-
     def __init__(self):
         self.people = []
-        self.compatibility_threshold = 7.0  # Minimum score for good compatibility
+        self.compatibility_threshold = 7.0
 
     def add_person(self, person):
         self.people.append(person)
@@ -108,19 +118,22 @@ class FriendshipAnalyzer:
         personality_score = self.calculate_personality_compatibility(person1, person2)
         communication_score = self.calculate_communication_compatibility(person1, person2)
         age_score = self.calculate_age_compatibility(person1, person2)
+        strategy_score = person1.compatibility_strategy(person2)
 
         weights = {
             'interests': 0.3,
-            'personality': 0.4,
+            'personality': 0.3,
             'communication': 0.2,
-            'age': 0.1
+            'age': 0.1,
+            'strategy': 0.1
         }
 
         overall_score = (
             interest_score * weights['interests'] +
             personality_score * weights['personality'] +
             communication_score * weights['communication'] +
-            age_score * weights['age']
+            age_score * weights['age'] +
+            strategy_score * weights['strategy']
         )
 
         print(f"\n📊 Compatibility Analysis Results:")
@@ -129,6 +142,7 @@ class FriendshipAnalyzer:
         print(f"Personality Compatibility: {personality_score:.1f}/10")
         print(f"Communication Compatibility: {communication_score:.1f}/10")
         print(f"Age Compatibility: {age_score:.1f}/10")
+        print(f"Strategy Compatibility: {strategy_score:.1f}/10")
         print(f"{'─'*40}")
         print(f"Overall Compatibility: {overall_score:.1f}/10")
 
@@ -136,7 +150,8 @@ class FriendshipAnalyzer:
             'interests': interest_score,
             'personality': personality_score,
             'communication': communication_score,
-            'age': age_score
+            'age': age_score,
+            'strategy': strategy_score
         })
 
         return overall_score
@@ -155,12 +170,9 @@ class FriendshipAnalyzer:
             print("❌ LOW COMPATIBILITY. This friendship might be challenging.")
 
         print(f"\n💡 Specific Insights:")
-        if detailed_scores['interests'] < 5:
-            print("• Try exploring new activities together to find common interests")
-        if detailed_scores['personality'] < 5:
-            print("• Your personality differences could complement each other")
-        if detailed_scores['communication'] < 5:
-            print("• Work on understanding each other's communication styles")
+        for key, score in detailed_scores.items():
+            if score < 5:
+                print(f"• {key.title()} could be improved for better compatibility.")
 
         strongest_aspect = max(detailed_scores, key=detailed_scores.get)
         print(f"• Your strongest connection is in: {strongest_aspect}")
@@ -204,59 +216,44 @@ class FriendshipAnalyzer:
         print(f"Total Friendships: {total_friendships}")
         print(f"Average Friendships per Person: {avg_friendships:.1f}")
 
+def create_person():
+    print("\n🧑 Enter New Person Details")
+    name = input("Name: ")
+    age = int(input("Age: "))
+    interests = input("Interests (comma separated): ").split(',')
+    interests = [i.strip() for i in interests]
+    print("Enter Personality Traits (0-10):")
+    traits = ['extroversion', 'openness', 'agreeableness', 'conscientiousness', 'neuroticism']
+    personality_traits = {t: int(input(f"  {t.title()}: ")) for t in traits}
+    print("Enter Communication Styles (0-10):")
+    styles = ['direct', 'emotional', 'humor', 'formal']
+    communication_style = {s: int(input(f"  {s.title()}: ")) for s in styles}
+
+    return Person(name, age, interests, personality_traits, communication_style)
+
 def demo():
     print("🤖 Welcome to AI-Powered Friendship Compatibility Analyzer!")
     print("=" * 60)
 
     analyzer = FriendshipAnalyzer()
 
-    alice = Person(
-        name="Alice",
-        age=22,
-        interests=["reading", "hiking", "photography", "cooking"],
-        personality_traits={
-            "extroversion": 7,
-            "openness": 8,
-            "agreeableness": 9,
-            "conscientiousness": 8,
-            "neuroticism": 3
-        },
-        communication_style={
-            "direct": 6,
-            "emotional": 7,
-            "humor": 8,
-            "formal": 4
-        }
-    )
+    while True:
+        add_more = input("\nWould you like to add a person? (yes/no): ").strip().lower()
+        if add_more == 'yes':
+            person = create_person()
+            analyzer.add_person(person)
+        else:
+            break
 
-    bob = Person(
-        name="Bob",
-        age=25,
-        interests=["hiking", "gaming", "music", "travel"],
-        personality_traits={
-            "extroversion": 6,
-            "openness": 9,
-            "agreeableness": 7,
-            "conscientiousness": 6,
-            "neuroticism": 4
-        },
-        communication_style={
-            "direct": 8,
-            "emotional": 5,
-            "humor": 9,
-            "formal": 3
-        }
-    )
+    for person in analyzer.people:
+        person.display_info()
 
-    analyzer.add_person(alice)
-    analyzer.add_person(bob)
-
-    alice.display_info()
-    bob.display_info()
-
-    analyzer.analyze_compatibility(alice, bob)
-    analyzer.find_best_matches(alice)
-    analyzer.create_friendship_network()
+    if len(analyzer.people) >= 2:
+        analyzer.analyze_compatibility(analyzer.people[0], analyzer.people[1])
+        analyzer.find_best_matches(analyzer.people[0])
+        analyzer.create_friendship_network()
+    else:
+        print("\nNot enough people to analyze compatibility.")
 
 if __name__ == "__main__":
     demo()

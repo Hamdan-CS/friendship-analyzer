@@ -24,9 +24,11 @@ This project uses Python and Object-Oriented Programming (OOP) to simulate and a
 
 ```bash
 📁 ai_friendship_analyzer/
-├── main.py               # Main Python file
-├── README.md             # Project info and instructions
-
+├── friendship_analyzer.py    # Your main code (modify existing file)
+├── tests/                   # Create this folder
+│   ├── __init__.py         # Create this empty file
+│   └── test_friendship_analyzer.py  # Create this file with the code above
+└── README.md               # Optional but recommended
 #Run the Demo
 python main.py
 

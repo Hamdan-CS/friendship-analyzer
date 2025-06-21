@@ -2,10 +2,6 @@
 """
 Unit tests for the Friendship Analyzer
 
-Run with: 
-    python -m unittest tests.test_friendship_analyzer
-    or
-    python tests/test_friendship_analyzer.py
 """
 
 import unittest

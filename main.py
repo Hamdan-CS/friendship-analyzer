@@ -112,8 +112,6 @@ class FriendshipAnalyzer:
             return 2
 
     def analyze_compatibility(self, person1, person2):
-        print(f"\n🤖 Analyzing compatibility between {person1.name} and {person2.name}...")
-
         interest_score = self.calculate_interest_compatibility(person1, person2)
         personality_score = self.calculate_personality_compatibility(person1, person2)
         communication_score = self.calculate_communication_compatibility(person1, person2)
@@ -136,49 +134,9 @@ class FriendshipAnalyzer:
             strategy_score * weights['strategy']
         )
 
-        print(f"\n📊 Compatibility Analysis Results:")
-        print(f"{'─'*40}")
-        print(f"Interest Compatibility: {interest_score:.1f}/10")
-        print(f"Personality Compatibility: {personality_score:.1f}/10")
-        print(f"Communication Compatibility: {communication_score:.1f}/10")
-        print(f"Age Compatibility: {age_score:.1f}/10")
-        print(f"Strategy Compatibility: {strategy_score:.1f}/10")
-        print(f"{'─'*40}")
-        print(f"Overall Compatibility: {overall_score:.1f}/10")
-
-        self.provide_recommendation(person1, person2, overall_score, {
-            'interests': interest_score,
-            'personality': personality_score,
-            'communication': communication_score,
-            'age': age_score,
-            'strategy': strategy_score
-        })
-
         return overall_score
 
-    def provide_recommendation(self, person1, person2, overall_score, detailed_scores):
-        print(f"\n🎯 AI Recommendation:")
-        if overall_score >= 8.5:
-            print("🌟 EXCELLENT MATCH! This friendship has amazing potential!")
-        elif overall_score >= 7.0:
-            print("✨ GREAT MATCH! This friendship looks very promising!")
-        elif overall_score >= 5.5:
-            print("👍 GOOD POTENTIAL! This friendship could work well with some effort.")
-        elif overall_score >= 4.0:
-            print("⚠️  MODERATE COMPATIBILITY. Friendship possible but may require work.")
-        else:
-            print("❌ LOW COMPATIBILITY. This friendship might be challenging.")
-
-        print(f"\n💡 Specific Insights:")
-        for key, score in detailed_scores.items():
-            if score < 5:
-                print(f"• {key.title()} could be improved for better compatibility.")
-
-        strongest_aspect = max(detailed_scores, key=detailed_scores.get)
-        print(f"• Your strongest connection is in: {strongest_aspect}")
-
     def find_best_matches(self, person):
-        print(f"\n🔍 Finding best matches for {person.name}...")
         matches = []
         for other_person in self.people:
             if other_person != person:
@@ -186,16 +144,9 @@ class FriendshipAnalyzer:
                 matches.append((other_person, score))
 
         matches.sort(key=lambda x: x[1], reverse=True)
-
-        print(f"\n🏆 Top Friendship Matches for {person.name}:")
-        print("=" * 50)
-        for i, (match, score) in enumerate(matches[:3], 1):
-            print(f"{i}. {match.name} - Compatibility: {score:.1f}/10")
-
         return matches
 
     def create_friendship_network(self):
-        print(f"\n🌐 Creating Friendship Network...")
         for person in self.people:
             for other_person in self.people:
                 if person != other_person:
@@ -205,11 +156,8 @@ class FriendshipAnalyzer:
                             'friend': other_person,
                             'compatibility_score': score
                         })
-        self.display_network_stats()
 
     def display_network_stats(self):
-        print(f"\n📈 Network Statistics:")
-        print("=" * 30)
         total_friendships = sum(len(person.friendships) for person in self.people)
         avg_friendships = total_friendships / len(self.people) if self.people else 0
         print(f"Total People: {len(self.people)}")
@@ -231,12 +179,8 @@ def create_person():
 
     return Person(name, age, interests, personality_traits, communication_style)
 
-def demo():
-    print("🤖 Welcome to AI-Powered Friendship Compatibility Analyzer!")
-    print("=" * 60)
-
+def run_demo():
     analyzer = FriendshipAnalyzer()
-
     while True:
         add_more = input("\nWould you like to add a person? (yes/no): ").strip().lower()
         if add_more == 'yes':
@@ -249,11 +193,61 @@ def demo():
         person.display_info()
 
     if len(analyzer.people) >= 2:
-        analyzer.analyze_compatibility(analyzer.people[0], analyzer.people[1])
-        analyzer.find_best_matches(analyzer.people[0])
+        person1 = analyzer.people[0]
+        person2 = analyzer.people[1]
+        score = analyzer.analyze_compatibility(person1, person2)
+        print(f"\nOverall Compatibility Score between {person1.name} and {person2.name}: {score:.2f}/10")
+
+        matches = analyzer.find_best_matches(person1)
+        print("\nTop Match(es):")
+        for match, score in matches:
+            print(f"{match.name} - Compatibility: {score:.2f}/10")
+
         analyzer.create_friendship_network()
+        analyzer.display_network_stats()
     else:
         print("\nNot enough people to analyze compatibility.")
 
+def run_tests():
+    print("\n🔬 Running Compatibility Tests...")
+
+    p1 = LogicalPerson("Ali", 25, ["coding", "chess"], {
+        "extroversion": 4, "openness": 6, "agreeableness": 7, "conscientiousness": 9, "neuroticism": 3
+    }, {
+        "direct": 9, "emotional": 2, "humor": 5, "formal": 6
+    })
+
+    p2 = EmpatheticPerson("Sara", 26, ["coding", "reading"], {
+        "extroversion": 5, "openness": 7, "agreeableness": 8, "conscientiousness": 7, "neuroticism": 6
+    }, {
+        "direct": 6, "emotional": 9, "humor": 7, "formal": 4
+    })
+
+    analyzer = FriendshipAnalyzer()
+    analyzer.add_person(p1)
+    analyzer.add_person(p2)
+
+    p1.display_info()
+    p2.display_info()
+
+    score = analyzer.analyze_compatibility(p1, p2)
+    print(f"\nOverall Compatibility Score: {score:.2f}/10")
+
+    matches = analyzer.find_best_matches(p1)
+    print("\nTop Match(es):")
+    for match, score in matches:
+        print(f"{match.name} - Compatibility: {score:.2f}/10")
+
+    analyzer.create_friendship_network()
+    analyzer.display_network_stats()
+
 if __name__ == "__main__":
-    demo()
+    try:
+        mode = input("Type 'demo' to use sample data or 'test' to enter your own: ").strip().lower()
+        if mode == "test":
+            run_demo()
+        else:
+            run_tests()
+    except (EOFError, OSError):
+        print("⚠️ Input not supported. Running test mode.")
+        run_tests()

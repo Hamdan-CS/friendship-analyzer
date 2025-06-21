@@ -251,3 +251,8 @@ if __name__ == "__main__":
     except (EOFError, OSError):
         print("⚠️ Input not supported. Running test mode.")
         run_tests()
+
+if __name__ == "__main__":
+    print("Friendship Analyzer")
+    print("To run tests: python -m unittest tests.test_friendship_analyzer")
+    print("To use: import friendship_analyzer")

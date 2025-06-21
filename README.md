@@ -35,11 +35,11 @@ Built-in test suite using unittest for automatic validation.
 
 ```bash
 📁 ai_friendship_analyzer/
-├── friendship_analyzer.py    # Your main code (modify existing file)
-├── tests/                   # Create this folder
-│   ├── __init__.py         # Create this empty file
-│   └── test_friendship_analyzer.py  # Create this file with the code above
-└── README.md               # Optional but recommended
+├── friendship_analyzer.py    
+├── tests/                   
+│   ├── __init__.py        
+│   └── test_friendship_analyzer.py 
+└── README.md             
 #Run the Demo
 python main.py
 

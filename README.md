@@ -9,14 +9,16 @@ This project uses Python and Object-Oriented Programming (OOP) to simulate and a
 
 ## 📌 Features
 
-- Create `Person` objects with traits and interests.
-- Automatically calculate friendship compatibility using:
-  - Shared Interests
-  - Personality Traits
-  - Communication Style
-  - Age Difference
-- AI-based recommendations based on compatibility score
-- Generate friendship networks and view stats
+-Create customizable Person objects with unique traits and preferences.
+Automatically calculate friendship compatibility using:
+✅ Shared Interests
+✅ Personality Traits
+✅ Communication Style
+✅ Age Difference
+✅ Strategy-based AI logic via polymorphism
+View best friendship matches with scores.
+Build a friendship network and generate stats.
+Built-in test suite using unittest for automatic validation.
 
 ---
 
